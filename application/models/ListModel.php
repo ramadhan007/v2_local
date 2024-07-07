@@ -1,0 +1,510 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class ListModel extends CI_Model {
+
+	function __construct(){
+		parent::__construct();
+	}
+	
+	function fontawesome()
+	{
+		$pattern = '/.fa-(.*):before/U';
+		// $subject = file_get_contents('css/font-awesome.min.css');
+		$fa_version_dir = "font-awesome-4.7.0";
+		$subject = file_get_contents("assets/font-awesome/$fa_version_dir/css/font-awesome.min.css");
+		$subject = substr($subject,strpos($subject,'fa-inverse')+strlen('fa-inverse'));
+		
+		preg_match_all($pattern, $subject, $matches, PREG_SET_ORDER);
+		
+		$lists = array();
+		foreach($matches as $match=>$val)
+		{
+			$lists[] = array('value' => 'fa-'.$val[1], 'text' => $val[1]);
+		}
+		$lists = $this->_subval_sort($lists,'text');
+		return $lists;
+		
+	}
+	
+	function category_type()
+	{
+		$lists = array();
+		$lists[] = array('value' => 'article', 'text' => 'Article');
+		$lists[] = array('value' => 'image', 'text' => 'Image');
+		return $lists;
+	}
+	
+	function title()
+	{
+		$lists = array();
+		$lists[] = array('value' => 'Mr', 'text' => 'Mr');
+		$lists[] = array('value' => 'Dr', 'text' => 'Dr');
+		$lists[] = array('value' => 'Prof', 'text' => 'Prof');
+		$lists[] = array('value' => 'Assoc. Prof', 'text' => 'Assoc. Prof');
+		$lists[] = array('value' => 'Mrs', 'text' => 'Mrs');
+		$lists[] = array('value' => 'Miss', 'text' => 'Miss');
+		$lists[] = array('value' => 'Ms', 'text' => 'Ms');
+		return $lists;
+	}
+	
+	function position()
+	{
+		$lists = array();
+		$lists[] = array('value' => 'Professor', 'text' => 'Professor');
+		$lists[] = array('value' => 'Associate Professor', 'text' => 'Associate Professor');
+		$lists[] = array('value' => 'Senior Lecturer', 'text' => 'Senior Lecturer');
+		$lists[] = array('value' => 'Lecturer', 'text' => 'Lecturer');
+		$lists[] = array('value' => 'Research Assistant', 'text' => 'Research Assistant');
+		$lists[] = array('value' => 'Other', 'text' => 'Other');
+		return $lists;
+	}
+	
+	function _subval_sort($a,$subkey)
+	{
+		foreach($a as $k=>$v) {
+			$b[$k] = strtolower($v[$subkey]);
+		}
+		asort($b);
+		foreach($b as $key=>$val) {
+			$c[] = $a[$key];
+		}
+		return $c;
+	}
+	
+	function currency()
+	{
+		$currrency = array();
+		$currrency[] = array('value' => 'AED', 'text' => 'United Arab Emirates, Dirhams');
+		$currrency[] = array('value' => 'AFN', 'text' => 'Afghanistan, Afghanis');
+		$currrency[] = array('value' => 'ALL', 'text' => 'Albania, Leke');
+		$currrency[] = array('value' => 'AMD', 'text' => 'Armenia, Drams');
+		$currrency[] = array('value' => 'ANG', 'text' => 'Netherlands Antilles, Guilders (also called Florins)');
+		$currrency[] = array('value' => 'AOA', 'text' => 'Angola, Kwanza');
+		$currrency[] = array('value' => 'ARS', 'text' => 'Argentina, Pesos');
+		$currrency[] = array('value' => 'AUD', 'text' => 'Australia, Dollars');
+		$currrency[] = array('value' => 'AWG', 'text' => 'Aruba, Guilders (also called Florins)');
+		$currrency[] = array('value' => 'AZN', 'text' => 'Azerbaijan, New Manats');
+		$currrency[] = array('value' => 'BAM', 'text' => 'Bosnia and Herzegovina, Convertible Marka');
+		$currrency[] = array('value' => 'BBD', 'text' => 'Barbados, Dollars');
+		$currrency[] = array('value' => 'BDT', 'text' => 'Bangladesh, Taka');
+		$currrency[] = array('value' => 'BGN', 'text' => 'Bulgaria, Leva');
+		$currrency[] = array('value' => 'BHD', 'text' => 'Bahrain, Dinars');
+		$currrency[] = array('value' => 'BIF', 'text' => 'Burundi, Francs');
+		$currrency[] = array('value' => 'BMD', 'text' => 'Bermuda, Dollars');
+		$currrency[] = array('value' => 'BND', 'text' => 'Brunei Darussalam, Dollars');
+		$currrency[] = array('value' => 'BOB', 'text' => 'Bolivia, Bolivianos');
+		$currrency[] = array('value' => 'BRL', 'text' => 'Brazil, Brazil Real');
+		$currrency[] = array('value' => 'BSD', 'text' => 'Bahamas, Dollars');
+		$currrency[] = array('value' => 'BTN', 'text' => 'Bhutan, Ngultrum');
+		$currrency[] = array('value' => 'BWP', 'text' => 'Botswana, Pulas');
+		$currrency[] = array('value' => 'BYR', 'text' => 'Belarus, Rubles');
+		$currrency[] = array('value' => 'BZD', 'text' => 'Belize, Dollars');
+		$currrency[] = array('value' => 'CAD', 'text' => 'Canada, Dollars');
+		$currrency[] = array('value' => 'CDF', 'text' => 'Congo/Kinshasa, Congolese Francs');
+		$currrency[] = array('value' => 'CHF', 'text' => 'Switzerland, Francs');
+		$currrency[] = array('value' => 'CLP', 'text' => 'Chile, Pesos');
+		$currrency[] = array('value' => 'CNY', 'text' => 'China, Yuan Renminbi');
+		$currrency[] = array('value' => 'COP', 'text' => 'Colombia, Pesos');
+		$currrency[] = array('value' => 'CRC', 'text' => 'Costa Rica, Colones');
+		$currrency[] = array('value' => 'CUP', 'text' => 'Cuba, Pesos');
+		$currrency[] = array('value' => 'CVE', 'text' => 'Cape Verde, Escudos');
+		$currrency[] = array('value' => 'CYP', 'text' => 'Cyprus, Pounds (expires 2008-Jan-31)');
+		$currrency[] = array('value' => 'CZK', 'text' => 'Czech Republic, Koruny');
+		$currrency[] = array('value' => 'DJF', 'text' => 'Djibouti, Francs');
+		$currrency[] = array('value' => 'DKK', 'text' => 'Denmark, Kroner');
+		$currrency[] = array('value' => 'DOP', 'text' => 'Dominican Republic, Pesos');
+		$currrency[] = array('value' => 'DZD', 'text' => 'Algeria, Algeria Dinars');
+		$currrency[] = array('value' => 'EEK', 'text' => 'Estonia, Krooni');
+		$currrency[] = array('value' => 'EGP', 'text' => 'Egypt, Pounds');
+		$currrency[] = array('value' => 'ERN', 'text' => 'Eritrea, Nakfa');
+		$currrency[] = array('value' => 'ETB', 'text' => 'Ethiopia, Birr');
+		$currrency[] = array('value' => 'EUR', 'text' => 'Euro Member Countries, Euro');
+		$currrency[] = array('value' => 'FJD', 'text' => 'Fiji, Dollars');
+		$currrency[] = array('value' => 'FKP', 'text' => 'Falkland Islands (Malvinas), Pounds');
+		$currrency[] = array('value' => 'GBP', 'text' => 'United Kingdom, Pounds');
+		$currrency[] = array('value' => 'GEL', 'text' => 'Georgia, Lari');
+		$currrency[] = array('value' => 'GGP', 'text' => 'Guernsey, Pounds');
+		$currrency[] = array('value' => 'GHS', 'text' => 'Ghana, Cedis');
+		$currrency[] = array('value' => 'GIP', 'text' => 'Gibraltar, Pounds');
+		$currrency[] = array('value' => 'GMD', 'text' => 'Gambia, Dalasi');
+		$currrency[] = array('value' => 'GNF', 'text' => 'Guinea, Francs');
+		$currrency[] = array('value' => 'GTQ', 'text' => 'Guatemala, Quetzales');
+		$currrency[] = array('value' => 'GYD', 'text' => 'Guyana, Dollars');
+		$currrency[] = array('value' => 'HKD', 'text' => 'Hong Kong, Dollars');
+		$currrency[] = array('value' => 'HNL', 'text' => 'Honduras, Lempiras');
+		$currrency[] = array('value' => 'HRK', 'text' => 'Croatia, Kuna');
+		$currrency[] = array('value' => 'HTG', 'text' => 'Haiti, Gourdes');
+		$currrency[] = array('value' => 'HUF', 'text' => 'Hungary, Forint');
+		$currrency[] = array('value' => 'IDR', 'text' => 'Indonesia, Rupiahs');
+		$currrency[] = array('value' => 'ILS', 'text' => 'Israel, New Shekels');
+		$currrency[] = array('value' => 'IMP', 'text' => 'Isle of Man, Pounds');
+		$currrency[] = array('value' => 'INR', 'text' => 'India, Rupees');
+		$currrency[] = array('value' => 'IQD', 'text' => 'Iraq, Dinars');
+		$currrency[] = array('value' => 'IRR', 'text' => 'Iran, Rials');
+		$currrency[] = array('value' => 'ISK', 'text' => 'Iceland, Kronur');
+		$currrency[] = array('value' => 'JEP', 'text' => 'Jersey, Pounds');
+		$currrency[] = array('value' => 'JMD', 'text' => 'Jamaica, Dollars');
+		$currrency[] = array('value' => 'JOD', 'text' => 'Jordan, Dinars');
+		$currrency[] = array('value' => 'JPY', 'text' => 'Japan, Yen');
+		$currrency[] = array('value' => 'KES', 'text' => 'Kenya, Shillings');
+		$currrency[] = array('value' => 'KGS', 'text' => 'Kyrgyzstan, Soms');
+		$currrency[] = array('value' => 'KHR', 'text' => 'Cambodia, Riels');
+		$currrency[] = array('value' => 'KMF', 'text' => 'Comoros, Francs');
+		$currrency[] = array('value' => 'KPW', 'text' => 'Korea (North), Won');
+		$currrency[] = array('value' => 'KRW', 'text' => 'Korea (South), Won');
+		$currrency[] = array('value' => 'KWD', 'text' => 'Kuwait, Dinars');
+		$currrency[] = array('value' => 'KYD', 'text' => 'Cayman Islands, Dollars');
+		$currrency[] = array('value' => 'KZT', 'text' => 'Kazakhstan, Tenge');
+		$currrency[] = array('value' => 'LAK', 'text' => 'Laos, Kips');
+		$currrency[] = array('value' => 'LBP', 'text' => 'Lebanon, Pounds');
+		$currrency[] = array('value' => 'LKR', 'text' => 'Sri Lanka, Rupees');
+		$currrency[] = array('value' => 'LRD', 'text' => 'Liberia, Dollars');
+		$currrency[] = array('value' => 'LSL', 'text' => 'Lesotho, Maloti');
+		$currrency[] = array('value' => 'LTL', 'text' => 'Lithuania, Litai');
+		$currrency[] = array('value' => 'LVL', 'text' => 'Latvia, Lati');
+		$currrency[] = array('value' => 'LYD', 'text' => 'Libya, Dinars');
+		$currrency[] = array('value' => 'MAD', 'text' => 'Morocco, Dirhams');
+		$currrency[] = array('value' => 'MDL', 'text' => 'Moldova, Lei');
+		$currrency[] = array('value' => 'MGA', 'text' => 'Madagascar, Ariary');
+		$currrency[] = array('value' => 'MKD', 'text' => 'Macedonia, Denars');
+		$currrency[] = array('value' => 'MMK', 'text' => 'Myanmar (Burma), Kyats');
+		$currrency[] = array('value' => 'MNT', 'text' => 'Mongolia, Tugriks');
+		$currrency[] = array('value' => 'MOP', 'text' => 'Macau, Patacas');
+		$currrency[] = array('value' => 'MWK', 'text' => 'Malawi, Kwachas');
+		$currrency[] = array('value' => 'MYR', 'text' => 'Malaysia, Ringgits');
+		$currrency[] = array('value' => 'MVR', 'text' => 'Maldives (Maldive Islands), Rufiyaa');
+		$currrency[] = array('value' => 'MTL', 'text' => 'Malta, Liri (expires 2008-Jan-31)');
+		$currrency[] = array('value' => 'MRO', 'text' => 'Mauritania, Ouguiyas');
+		$currrency[] = array('value' => 'MUR', 'text' => 'Mauritius, Rupees');
+		$currrency[] = array('value' => 'MXN', 'text' => 'Mexico, Pesos');
+		$currrency[] = array('value' => 'MZN', 'text' => 'Mozambique, Meticais');
+		$currrency[] = array('value' => 'NAD', 'text' => 'Namibia, Dollars');
+		$currrency[] = array('value' => 'NGN', 'text' => 'Nigeria, Nairas');
+		$currrency[] = array('value' => 'NIO', 'text' => 'Nicaragua, Cordobas');
+		$currrency[] = array('value' => 'NOK', 'text' => 'Norway, Krone');
+		$currrency[] = array('value' => 'NPR', 'text' => 'Nepal, Nepal Rupees');
+		$currrency[] = array('value' => 'NZD', 'text' => 'New Zealand, Dollars');
+		$currrency[] = array('value' => 'OMR', 'text' => 'Oman, Rials');
+		$currrency[] = array('value' => 'PAB', 'text' => 'Panama, Balboa');
+		$currrency[] = array('value' => 'PEN', 'text' => 'Peru, Nuevos Soles');
+		$currrency[] = array('value' => 'PGK', 'text' => 'Papua New Guinea, Kina');
+		$currrency[] = array('value' => 'PHP', 'text' => 'Philippines, Pesos');
+		$currrency[] = array('value' => 'PKR', 'text' => 'Pakistan, Rupees');
+		$currrency[] = array('value' => 'PLN', 'text' => 'Poland, Zlotych');
+		$currrency[] = array('value' => 'PYG', 'text' => 'Paraguay, Guarani');
+		$currrency[] = array('value' => 'QAR', 'text' => 'Qatar, Rials');
+		$currrency[] = array('value' => 'RON', 'text' => 'Romania, New Lei');
+		$currrency[] = array('value' => 'RSD', 'text' => 'Serbia, Dinars');
+		$currrency[] = array('value' => 'RUB', 'text' => 'Russia, Rubles');
+		$currrency[] = array('value' => 'RWF', 'text' => 'Rwanda, Rwanda Francs');
+		$currrency[] = array('value' => 'SAR', 'text' => 'Saudi Arabia, Riyals');
+		$currrency[] = array('value' => 'SBD', 'text' => 'Solomon Islands, Dollars');
+		$currrency[] = array('value' => 'SCR', 'text' => 'Seychelles, Rupees');
+		$currrency[] = array('value' => 'SDG', 'text' => 'Sudan, Pounds');
+		$currrency[] = array('value' => 'SEK', 'text' => 'Sweden, Kronor');
+		$currrency[] = array('value' => 'SGD', 'text' => 'Singapore, Dollars');
+		$currrency[] = array('value' => 'SHP', 'text' => 'Saint Helena, Pounds');
+		$currrency[] = array('value' => 'SLL', 'text' => 'Sierra Leone, Leones');
+		$currrency[] = array('value' => 'SOS', 'text' => 'Somalia, Shillings');
+		$currrency[] = array('value' => 'SPL', 'text' => 'Seborga, Luigini');
+		$currrency[] = array('value' => 'SRD', 'text' => 'Suriname, Dollars');
+		$currrency[] = array('value' => 'STD', 'text' => 'São Tome and Principe, Dobras');
+		$currrency[] = array('value' => 'SVC', 'text' => 'El Salvador, Colones');
+		$currrency[] = array('value' => 'SYP', 'text' => 'Syria, Pounds');
+		$currrency[] = array('value' => 'SZL', 'text' => 'Swaziland, Emalangeni');
+		$currrency[] = array('value' => 'THB', 'text' => 'Thailand, Baht');
+		$currrency[] = array('value' => 'TJS', 'text' => 'Tajikistan, Somoni');
+		$currrency[] = array('value' => 'TMM', 'text' => 'Turkmenistan, Manats');
+		$currrency[] = array('value' => 'TND', 'text' => 'Tunisia, Dinars');
+		$currrency[] = array('value' => 'TOP', 'text' => 'Tonga, Pa\'anga');
+		$currrency[] = array('value' => 'TRY', 'text' => 'Turkey, New Lira');
+		$currrency[] = array('value' => 'TTD', 'text' => 'Trinidad and Tobago, Dollars');
+		$currrency[] = array('value' => 'TVD', 'text' => 'Tuvalu, Tuvalu Dollars');
+		$currrency[] = array('value' => 'TWD', 'text' => 'Taiwan, New Dollars');
+		$currrency[] = array('value' => 'TZS', 'text' => 'Tanzania, Shillings');
+		$currrency[] = array('value' => 'UAH', 'text' => 'Ukraine, Hryvnia');
+		$currrency[] = array('value' => 'UGX', 'text' => 'Uganda, Shillings');
+		$currrency[] = array('value' => 'USD', 'text' => 'United States of America, Dollars');
+		$currrency[] = array('value' => 'UYU', 'text' => 'Uruguay, Pesos');
+		$currrency[] = array('value' => 'UZS', 'text' => 'Uzbekistan, Sums');
+		$currrency[] = array('value' => 'VEB', 'text' => 'Venezuela, Bolivares (expires 2008-Jun-30)');
+		$currrency[] = array('value' => 'VEF', 'text' => 'Venezuela, Bolivares Fuertes');
+		$currrency[] = array('value' => 'VND', 'text' => 'Viet Nam, Dong');
+		$currrency[] = array('value' => 'VUV', 'text' => 'Vanuatu, Vatu');
+		$currrency[] = array('value' => 'WST', 'text' => 'Samoa, Tala');
+		$currrency[] = array('value' => 'XAF', 'text' => 'Communauté Financière Africaine BEAC, Francs');
+		$currrency[] = array('value' => 'XAG', 'text' => 'Silver, Ounces');
+		$currrency[] = array('value' => 'XAU', 'text' => 'Gold, Ounces');
+		$currrency[] = array('value' => 'XCD', 'text' => 'East Caribbean Dollars');
+		$currrency[] = array('value' => 'XDR', 'text' => 'International Monetary Fund (IMF) Special Drawing Rights');
+		$currrency[] = array('value' => 'XOF', 'text' => 'Communauté Financière Africaine BCEAO, Francs');
+		$currrency[] = array('value' => 'XPD', 'text' => 'Palladium Ounces');
+		$currrency[] = array('value' => 'XPF', 'text' => 'Comptoirs Français du Pacifique Francs');
+		$currrency[] = array('value' => 'XPT', 'text' => 'Platinum, Ounces');
+		$currrency[] = array('value' => 'YER', 'text' => 'Yemen, Rials');
+		$currrency[] = array('value' => 'ZAR', 'text' => 'South Africa, Rand');
+		$currrency[] = array('value' => 'ZMK', 'text' => 'Zambia, Kwacha');
+		$currrency[] = array('value' => 'ZWD', 'text' => 'Zimbabwe, Zimbabwe Dollars');
+		
+		$currrency = $this->_subval_sort($currrency,'text');
+		
+		return $currrency;
+	}
+	
+	function country()
+	{
+		$country = array();
+		$country[] = array('value' => 'Afghanistan', 'text' => 'Afghanistan');
+		$country[] = array('value' => 'Albania', 'text' => 'Albania');
+		$country[] = array('value' => 'Algeria', 'text' => 'Algeria');
+		$country[] = array('value' => 'American Samoa', 'text' => 'American Samoa');
+		$country[] = array('value' => 'Andorra', 'text' => 'Andorra');
+		$country[] = array('value' => 'Angola', 'text' => 'Angola');
+		$country[] = array('value' => 'Anguilla', 'text' => 'Anguilla');
+		$country[] = array('value' => 'Antigua & Barbuda', 'text' => 'Antigua & Barbuda');
+		$country[] = array('value' => 'Argentina', 'text' => 'Argentina');
+		$country[] = array('value' => 'Armenia', 'text' => 'Armenia');
+		$country[] = array('value' => 'Aruba', 'text' => 'Aruba');
+		$country[] = array('value' => 'Australia', 'text' => 'Australia');
+		$country[] = array('value' => 'Austria', 'text' => 'Austria');
+		$country[] = array('value' => 'Azerbaijan', 'text' => 'Azerbaijan');
+		$country[] = array('value' => 'Bahamas', 'text' => 'Bahamas');
+		$country[] = array('value' => 'Bahrain', 'text' => 'Bahrain');
+		$country[] = array('value' => 'Bangladesh', 'text' => 'Bangladesh');
+		$country[] = array('value' => 'Barbados', 'text' => 'Barbados');
+		$country[] = array('value' => 'Belarus', 'text' => 'Belarus');
+		$country[] = array('value' => 'Belgium', 'text' => 'Belgium');
+		$country[] = array('value' => 'Belize', 'text' => 'Belize');
+		$country[] = array('value' => 'Benin', 'text' => 'Benin');
+		$country[] = array('value' => 'Bermuda', 'text' => 'Bermuda');
+		$country[] = array('value' => 'Bhutan', 'text' => 'Bhutan');
+		$country[] = array('value' => 'Bolivia', 'text' => 'Bolivia');
+		$country[] = array('value' => 'Bonaire', 'text' => 'Bonaire');
+		$country[] = array('value' => 'Bosnia & Herzegovina', 'text' => 'Bosnia & Herzegovina');
+		$country[] = array('value' => 'Botswana', 'text' => 'Botswana');
+		$country[] = array('value' => 'Brazil', 'text' => 'Brazil');
+		$country[] = array('value' => 'British Indian Ocean Ter', 'text' => 'British Indian Ocean Ter');
+		$country[] = array('value' => 'Brunei', 'text' => 'Brunei');
+		$country[] = array('value' => 'Bulgaria', 'text' => 'Bulgaria');
+		$country[] = array('value' => 'Burkina Faso', 'text' => 'Burkina Faso');
+		$country[] = array('value' => 'Burundi', 'text' => 'Burundi');
+		$country[] = array('value' => 'Cambodia', 'text' => 'Cambodia');
+		$country[] = array('value' => 'Cameroon', 'text' => 'Cameroon');
+		$country[] = array('value' => 'Canada', 'text' => 'Canada');
+		$country[] = array('value' => 'Canary Islands', 'text' => 'Canary Islands');
+		$country[] = array('value' => 'Cape Verde', 'text' => 'Cape Verde');
+		$country[] = array('value' => 'Cayman Islands', 'text' => 'Cayman Islands');
+		$country[] = array('value' => 'Central African Republic', 'text' => 'Central African Republic');
+		$country[] = array('value' => 'Chad', 'text' => 'Chad');
+		$country[] = array('value' => 'Channel Islands', 'text' => 'Channel Islands');
+		$country[] = array('value' => 'Chile', 'text' => 'Chile');
+		$country[] = array('value' => 'China', 'text' => 'China');
+		$country[] = array('value' => 'Christmas Island', 'text' => 'Christmas Island');
+		$country[] = array('value' => 'Cocos Island', 'text' => 'Cocos Island');
+		$country[] = array('value' => 'Colombia', 'text' => 'Colombia');
+		$country[] = array('value' => 'Comoros', 'text' => 'Comoros');
+		$country[] = array('value' => 'Congo', 'text' => 'Congo');
+		$country[] = array('value' => 'Cook Islands', 'text' => 'Cook Islands');
+		$country[] = array('value' => 'Costa Rica', 'text' => 'Costa Rica');
+		$country[] = array('value' => 'Cote D Ivoire', 'text' => 'Cote D\'Ivoire');
+		$country[] = array('value' => 'Croatia', 'text' => 'Croatia');
+		$country[] = array('value' => 'Cuba', 'text' => 'Cuba');
+		$country[] = array('value' => 'Curacao', 'text' => 'Curacao');
+		$country[] = array('value' => 'Cyprus', 'text' => 'Cyprus');
+		$country[] = array('value' => 'Czech Republic', 'text' => 'Czech Republic');
+		$country[] = array('value' => 'Denmark', 'text' => 'Denmark');
+		$country[] = array('value' => 'Djibouti', 'text' => 'Djibouti');
+		$country[] = array('value' => 'Dominica', 'text' => 'Dominica');
+		$country[] = array('value' => 'Dominican Republic', 'text' => 'Dominican Republic');
+		$country[] = array('value' => 'East Timor', 'text' => 'East Timor');
+		$country[] = array('value' => 'Ecuador', 'text' => 'Ecuador');
+		$country[] = array('value' => 'Egypt', 'text' => 'Egypt');
+		$country[] = array('value' => 'El Salvador', 'text' => 'El Salvador');
+		$country[] = array('value' => 'Equatorial Guinea', 'text' => 'Equatorial Guinea');
+		$country[] = array('value' => 'Eritrea', 'text' => 'Eritrea');
+		$country[] = array('value' => 'Estonia', 'text' => 'Estonia');
+		$country[] = array('value' => 'Ethiopia', 'text' => 'Ethiopia');
+		$country[] = array('value' => 'Falkland Islands', 'text' => 'Falkland Islands');
+		$country[] = array('value' => 'Faroe Islands', 'text' => 'Faroe Islands');
+		$country[] = array('value' => 'Fiji', 'text' => 'Fiji');
+		$country[] = array('value' => 'Finland', 'text' => 'Finland');
+		$country[] = array('value' => 'France', 'text' => 'France');
+		$country[] = array('value' => 'French Guiana', 'text' => 'French Guiana');
+		$country[] = array('value' => 'French Polynesia', 'text' => 'French Polynesia');
+		$country[] = array('value' => 'French Southern Ter', 'text' => 'French Southern Ter');
+		$country[] = array('value' => 'Gabon', 'text' => 'Gabon');
+		$country[] = array('value' => 'Gambia', 'text' => 'Gambia');
+		$country[] = array('value' => 'Georgia', 'text' => 'Georgia');
+		$country[] = array('value' => 'Germany', 'text' => 'Germany');
+		$country[] = array('value' => 'Ghana', 'text' => 'Ghana');
+		$country[] = array('value' => 'Gibraltar', 'text' => 'Gibraltar');
+		$country[] = array('value' => 'Great Britain', 'text' => 'Great Britain');
+		$country[] = array('value' => 'Greece', 'text' => 'Greece');
+		$country[] = array('value' => 'Greenland', 'text' => 'Greenland');
+		$country[] = array('value' => 'Grenada', 'text' => 'Grenada');
+		$country[] = array('value' => 'Guadeloupe', 'text' => 'Guadeloupe');
+		$country[] = array('value' => 'Guam', 'text' => 'Guam');
+		$country[] = array('value' => 'Guatemala', 'text' => 'Guatemala');
+		$country[] = array('value' => 'Guinea', 'text' => 'Guinea');
+		$country[] = array('value' => 'Guyana', 'text' => 'Guyana');
+		$country[] = array('value' => 'Haiti', 'text' => 'Haiti');
+		$country[] = array('value' => 'Hawaii', 'text' => 'Hawaii');
+		$country[] = array('value' => 'Honduras', 'text' => 'Honduras');
+		$country[] = array('value' => 'Hong Kong', 'text' => 'Hong Kong');
+		$country[] = array('value' => 'Hungary', 'text' => 'Hungary');
+		$country[] = array('value' => 'Iceland', 'text' => 'Iceland');
+		$country[] = array('value' => 'India', 'text' => 'India');
+		$country[] = array('value' => 'Indonesia', 'text' => 'Indonesia');
+		$country[] = array('value' => 'Iran', 'text' => 'Iran');
+		$country[] = array('value' => 'Iraq', 'text' => 'Iraq');
+		$country[] = array('value' => 'Ireland', 'text' => 'Ireland');
+		$country[] = array('value' => 'Isle of Man', 'text' => 'Isle of Man');
+		$country[] = array('value' => 'Israel', 'text' => 'Israel');
+		$country[] = array('value' => 'Italy', 'text' => 'Italy');
+		$country[] = array('value' => 'Jamaica', 'text' => 'Jamaica');
+		$country[] = array('value' => 'Japan', 'text' => 'Japan');
+		$country[] = array('value' => 'Jordan', 'text' => 'Jordan');
+		$country[] = array('value' => 'Kazakhstan', 'text' => 'Kazakhstan');
+		$country[] = array('value' => 'Kenya', 'text' => 'Kenya');
+		$country[] = array('value' => 'Kiribati', 'text' => 'Kiribati');
+		$country[] = array('value' => 'Korea North', 'text' => 'Korea North');
+		$country[] = array('value' => 'Korea South', 'text' => 'Korea South');
+		$country[] = array('value' => 'Kuwait', 'text' => 'Kuwait');
+		$country[] = array('value' => 'Kyrgyzstan', 'text' => 'Kyrgyzstan');
+		$country[] = array('value' => 'Laos', 'text' => 'Laos');
+		$country[] = array('value' => 'Latvia', 'text' => 'Latvia');
+		$country[] = array('value' => 'Lebanon', 'text' => 'Lebanon');
+		$country[] = array('value' => 'Lesotho', 'text' => 'Lesotho');
+		$country[] = array('value' => 'Liberia', 'text' => 'Liberia');
+		$country[] = array('value' => 'Libya', 'text' => 'Libya');
+		$country[] = array('value' => 'Liechtenstein', 'text' => 'Liechtenstein');
+		$country[] = array('value' => 'Lithuania', 'text' => 'Lithuania');
+		$country[] = array('value' => 'Luxembourg', 'text' => 'Luxembourg');
+		$country[] = array('value' => 'Macau', 'text' => 'Macau');
+		$country[] = array('value' => 'Macedonia', 'text' => 'Macedonia');
+		$country[] = array('value' => 'Madagascar', 'text' => 'Madagascar');
+		$country[] = array('value' => 'Malawi', 'text' => 'Malawi');
+		$country[] = array('value' => 'Malaysia', 'text' => 'Malaysia');
+		$country[] = array('value' => 'Maldives', 'text' => 'Maldives');
+		$country[] = array('value' => 'Mali', 'text' => 'Mali');
+		$country[] = array('value' => 'Malta', 'text' => 'Malta');
+		$country[] = array('value' => 'Marshall Islands', 'text' => 'Marshall Islands');
+		$country[] = array('value' => 'Martinique', 'text' => 'Martinique');
+		$country[] = array('value' => 'Mauritania', 'text' => 'Mauritania');
+		$country[] = array('value' => 'Mauritius', 'text' => 'Mauritius');
+		$country[] = array('value' => 'Mayotte', 'text' => 'Mayotte');
+		$country[] = array('value' => 'Mexico', 'text' => 'Mexico');
+		$country[] = array('value' => 'Midway Islands', 'text' => 'Midway Islands');
+		$country[] = array('value' => 'Moldova', 'text' => 'Moldova');
+		$country[] = array('value' => 'Monaco', 'text' => 'Monaco');
+		$country[] = array('value' => 'Mongolia', 'text' => 'Mongolia');
+		$country[] = array('value' => 'Montserrat', 'text' => 'Montserrat');
+		$country[] = array('value' => 'Morocco', 'text' => 'Morocco');
+		$country[] = array('value' => 'Mozambique', 'text' => 'Mozambique');
+		$country[] = array('value' => 'Myanmar', 'text' => 'Myanmar');
+		$country[] = array('value' => 'Nambia', 'text' => 'Nambia');
+		$country[] = array('value' => 'Nauru', 'text' => 'Nauru');
+		$country[] = array('value' => 'Nepal', 'text' => 'Nepal');
+		$country[] = array('value' => 'Netherland Antilles', 'text' => 'Netherland Antilles');
+		$country[] = array('value' => 'Netherlands (Holland, Europe)', 'text' => 'Netherlands (Holland, Europe)');
+		$country[] = array('value' => 'Nevis', 'text' => 'Nevis');
+		$country[] = array('value' => 'New Caledonia', 'text' => 'New Caledonia');
+		$country[] = array('value' => 'New Zealand', 'text' => 'New Zealand');
+		$country[] = array('value' => 'Nicaragua', 'text' => 'Nicaragua');
+		$country[] = array('value' => 'Niger', 'text' => 'Niger');
+		$country[] = array('value' => 'Nigeria', 'text' => 'Nigeria');
+		$country[] = array('value' => 'Niue', 'text' => 'Niue');
+		$country[] = array('value' => 'Norfolk Island', 'text' => 'Norfolk Island');
+		$country[] = array('value' => 'Norway', 'text' => 'Norway');
+		$country[] = array('value' => 'Oman', 'text' => 'Oman');
+		$country[] = array('value' => 'Pakistan', 'text' => 'Pakistan');
+		$country[] = array('value' => 'Palau Island', 'text' => 'Palau Island');
+		$country[] = array('value' => 'Palestine', 'text' => 'Palestine');
+		$country[] = array('value' => 'Panama', 'text' => 'Panama');
+		$country[] = array('value' => 'Papua New Guinea', 'text' => 'Papua New Guinea');
+		$country[] = array('value' => 'Paraguay', 'text' => 'Paraguay');
+		$country[] = array('value' => 'Peru', 'text' => 'Peru');
+		$country[] = array('value' => 'Philippines', 'text' => 'Philippines');
+		$country[] = array('value' => 'Pitcairn Island', 'text' => 'Pitcairn Island');
+		$country[] = array('value' => 'Poland', 'text' => 'Poland');
+		$country[] = array('value' => 'Portugal', 'text' => 'Portugal');
+		$country[] = array('value' => 'Puerto Rico', 'text' => 'Puerto Rico');
+		$country[] = array('value' => 'Qatar', 'text' => 'Qatar');
+		$country[] = array('value' => 'Republic of Montenegro', 'text' => 'Republic of Montenegro');
+		$country[] = array('value' => 'Republic of Serbia', 'text' => 'Republic of Serbia');
+		$country[] = array('value' => 'Reunion', 'text' => 'Reunion');
+		$country[] = array('value' => 'Romania', 'text' => 'Romania');
+		$country[] = array('value' => 'Russia', 'text' => 'Russia');
+		$country[] = array('value' => 'Rwanda', 'text' => 'Rwanda');
+		$country[] = array('value' => 'Saipan', 'text' => 'Saipan');
+		$country[] = array('value' => 'Samoa', 'text' => 'Samoa');
+		$country[] = array('value' => 'Samoa American', 'text' => 'Samoa American');
+		$country[] = array('value' => 'San Marino', 'text' => 'San Marino');
+		$country[] = array('value' => 'Sao Tome & Principe', 'text' => 'Sao Tome & Principe');
+		$country[] = array('value' => 'Saudi Arabia', 'text' => 'Saudi Arabia');
+		$country[] = array('value' => 'Senegal', 'text' => 'Senegal');
+		$country[] = array('value' => 'Seychelles', 'text' => 'Seychelles');
+		$country[] = array('value' => 'Sierra Leone', 'text' => 'Sierra Leone');
+		$country[] = array('value' => 'Singapore', 'text' => 'Singapore');
+		$country[] = array('value' => 'Slovakia', 'text' => 'Slovakia');
+		$country[] = array('value' => 'Slovenia', 'text' => 'Slovenia');
+		$country[] = array('value' => 'Solomon Islands', 'text' => 'Solomon Islands');
+		$country[] = array('value' => 'Somalia', 'text' => 'Somalia');
+		$country[] = array('value' => 'South Africa', 'text' => 'South Africa');
+		$country[] = array('value' => 'Spain', 'text' => 'Spain');
+		$country[] = array('value' => 'Sri Lanka', 'text' => 'Sri Lanka');
+		$country[] = array('value' => 'St Barthelemy', 'text' => 'St Barthelemy');
+		$country[] = array('value' => 'St Eustatius', 'text' => 'St Eustatius');
+		$country[] = array('value' => 'St Helena', 'text' => 'St Helena');
+		$country[] = array('value' => 'St Kitts-Nevis', 'text' => 'St Kitts-Nevis');
+		$country[] = array('value' => 'St Lucia', 'text' => 'St Lucia');
+		$country[] = array('value' => 'St Maarten', 'text' => 'St Maarten');
+		$country[] = array('value' => 'St Pierre & Miquelon', 'text' => 'St Pierre & Miquelon');
+		$country[] = array('value' => 'St Vincent & Grenadines', 'text' => 'St Vincent & Grenadines');
+		$country[] = array('value' => 'Sudan', 'text' => 'Sudan');
+		$country[] = array('value' => 'Suriname', 'text' => 'Suriname');
+		$country[] = array('value' => 'Swaziland', 'text' => 'Swaziland');
+		$country[] = array('value' => 'Sweden', 'text' => 'Sweden');
+		$country[] = array('value' => 'Switzerland', 'text' => 'Switzerland');
+		$country[] = array('value' => 'Syria', 'text' => 'Syria');
+		$country[] = array('value' => 'Tahiti', 'text' => 'Tahiti');
+		$country[] = array('value' => 'Taiwan', 'text' => 'Taiwan');
+		$country[] = array('value' => 'Tajikistan', 'text' => 'Tajikistan');
+		$country[] = array('value' => 'Tanzania', 'text' => 'Tanzania');
+		$country[] = array('value' => 'Thailand', 'text' => 'Thailand');
+		$country[] = array('value' => 'Togo', 'text' => 'Togo');
+		$country[] = array('value' => 'Tokelau', 'text' => 'Tokelau');
+		$country[] = array('value' => 'Tonga', 'text' => 'Tonga');
+		$country[] = array('value' => 'Trinidad & Tobago', 'text' => 'Trinidad & Tobago');
+		$country[] = array('value' => 'Tunisia', 'text' => 'Tunisia');
+		$country[] = array('value' => 'Turkey', 'text' => 'Turkey');
+		$country[] = array('value' => 'Turkmenistan', 'text' => 'Turkmenistan');
+		$country[] = array('value' => 'Turks & Caicos Is', 'text' => 'Turks & Caicos Is');
+		$country[] = array('value' => 'Tuvalu', 'text' => 'Tuvalu');
+		$country[] = array('value' => 'Uganda', 'text' => 'Uganda');
+		$country[] = array('value' => 'Ukraine', 'text' => 'Ukraine');
+		$country[] = array('value' => 'United Arab Emirates', 'text' => 'United Arab Emirates');
+		$country[] = array('value' => 'United Kingdom', 'text' => 'United Kingdom');
+		$country[] = array('value' => 'United States of America', 'text' => 'United States of America');
+		$country[] = array('value' => 'Uruguay', 'text' => 'Uruguay');
+		$country[] = array('value' => 'Uzbekistan', 'text' => 'Uzbekistan');
+		$country[] = array('value' => 'Vanuatu', 'text' => 'Vanuatu');
+		$country[] = array('value' => 'Vatican City State', 'text' => 'Vatican City State');
+		$country[] = array('value' => 'Venezuela', 'text' => 'Venezuela');
+		$country[] = array('value' => 'Vietnam', 'text' => 'Vietnam');
+		$country[] = array('value' => 'Virgin Islands (Brit)', 'text' => 'Virgin Islands (Brit)');
+		$country[] = array('value' => 'Virgin Islands (USA)', 'text' => 'Virgin Islands (USA)');
+		$country[] = array('value' => 'Wake Island', 'text' => 'Wake Island');
+		$country[] = array('value' => 'Wallis & Futana Is', 'text' => 'Wallis & Futana Is');
+		$country[] = array('value' => 'Yemen', 'text' => 'Yemen');
+		$country[] = array('value' => 'Zaire', 'text' => 'Zaire');
+		$country[] = array('value' => 'Zambia', 'text' => 'Zambia');
+		$country[] = array('value' => 'Zimbabwe', 'text' => 'Zimbabwe');
+		
+		$country = $this->_subval_sort($country,'text');
+		
+		return $country;
+	}
+}
+
+?>

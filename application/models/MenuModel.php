@@ -1,0 +1,73 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class MenuModel extends CI_Model {
+	
+	// table name
+	private $table= 'tb_menu';
+
+	function __construct(){
+		parent::__construct();
+	}
+	
+	//get field by id
+	function get_field_by_id($id, $field)
+	{
+		return model_get_field_by_id($this->table, $id, $field);
+	}
+	
+	// get record by id
+	function get_by_id($id){
+		return model_get_by_id($this->table, $id);
+	}
+	
+	// get record by field
+	function get_by_field($field_name, $field_value){
+		return model_get_by_field($this->table, $field_name, $field_value);
+	}
+	
+	//get array for menu list (select, radio)
+	function get_list($value='id', $text='title')
+	{
+		return model_get_list($this->table, $value, $text);
+	}
+	
+	// get number of records in database
+	function count_all($cari=''){
+		return model_count_all($this->table, $cari, array('title','location'));
+	}
+	
+	// get records with paging
+	function get_paged_list($limit=10, $offset=0, $cari=''){
+		// return model_get_paged_list($this->table, $limit, $offset, "*, fc_count_menu_item(id) AS menuitem", 'id', 'asc', $cari, array('title','location'));
+		$offset = $offset ? $offset : 0;
+		$cond_cari = $cari ? "WHERE (a.title like '%$cari%' OR a.alias like '%$cari%')" : "";
+		$query = "SELECT a.*, b.name as usertype1, fc_count_menu_item(a.id) AS menuitem
+			FROM $this->table as a
+				INNER join tb_usertype as b on a.usertype = b.id
+			$cond_cari
+			ORDER BY a.id ASC
+			LIMIT $offset, $limit";
+		return $this->db->query($query);
+	}
+	
+	function get_all(){
+		return model_get_all($this->table, 'id', 'asc');
+	}
+	
+	// add new record
+	function save($data){
+		return model_save($this->table,$data);
+	}
+	
+	// update record by id
+	function update($id, $data){
+		model_update($this->table, $id, $data);
+	}
+	
+	// delete record by id
+	function delete($ids=array()){
+		model_delete($this->table, $ids);
+	}
+}
+
+?>
